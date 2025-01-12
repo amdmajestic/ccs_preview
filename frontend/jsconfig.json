@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+      "baseUrl": ".",  // Set base URL to root of the project
+    "paths": {
+    "/src/*": ["src/*"]  // Map /src/* to src/*
+    }
+},
+"exclude": ["node_modules"]
+}
