@@ -81,13 +81,19 @@ This project is developed as part of the Final Year Project for the **Bachelor o
             -  Activate virtual environment:
     
                 ```bash
-                source venv/bin/activate
+                source ccs_venv/bin/activate
                 ```
             
                 #### On Windows:
                
                 ```bash
-                ccs_venv\Scripts\activate
+                ccs_venv\scripts\activate
+                ```
+
+            - Install dependencies:
+        
+                ```bash
+                py -m pip install -r requirements/requirements.txt
                 ```
     
             - Navigate to the `backend` directory:
@@ -95,13 +101,7 @@ This project is developed as part of the Final Year Project for the **Bachelor o
                 ```bash
                 cd backend
                 ```
-        
-            - Install dependencies:
-        
-                ```bash
-                pip install -r requirements.txt
-                ```
-  
+          
             - Initialize database migrations:
         
                 ```bash
@@ -131,17 +131,17 @@ This project is developed as part of the Final Year Project for the **Bachelor o
             - Navigate to the `frontend` directory:
         
                 ```bash
-                cd ../frontend
+                cd frontend
                 ```
         
             - Install dependencies:
          
-                - Copy content from `backend/requirements--frontend.txt` file.
+                - Copy content from `(root)/requirements/requirements--frontend.txt` file.
                   
-                - Pate the content in the terminal:
+                - Pate the copied contents 🔡 in the terminal:
             
                     ```bash
-                    npm install <?pasted-content>
+                    npm install <?pasted-libs:specs>
                     ```
         
             - Run the development server:
@@ -155,6 +155,8 @@ This project is developed as part of the Final Year Project for the **Bachelor o
         - Initialize:
           
             - Run Comand in `Windows PowerShell`:
+              
+                *navigating from `(root)` dir:*
               
                 ```bash
                 iex (gc ./scripts/init-services.ps1 -Raw)
@@ -195,13 +197,13 @@ This project is developed as part of the Final Year Project for the **Bachelor o
             - Run 'backend service' by typing `djrb`:
          
                 ```bash
-                ...\backend> djrb
+                (root)...\backend> djrb
                 ```
                 
             - Run 'frontend service' by typing `djrf`:
          
                 ```bash
-                ...\frontend> djrf
+                (root)...\frontend> djrf
                 ```
 
 4. **Using Docker (Optional)**:
