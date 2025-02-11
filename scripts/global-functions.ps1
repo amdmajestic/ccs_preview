@@ -7,6 +7,10 @@ function ps1_run_command {
         [string]$url = $null,
         $context = $null
     )
+    try {
+        $defaultForegroundColor = $Host.UI.RawUI.ForegroundColor
+        $defaultBackgroundColor = $Host.UI.RawUI.BackgroundColor
+
         if(($type -eq "file") -or ($type -eq "array" )) {
             # Read the content of the file into the variable $contents_arr
             if($type -eq "file") {
@@ -25,8 +29,6 @@ function ps1_run_command {
                     if ($content -ne "") {                        
                         Write-Host "<C# $LineNo>  Starting: $content" -ForegroundColor DarkGreen
                         
-                        $defaultForegroundColor = $Host.UI.RawUI.ForegroundColor
-                        $defaultBackgroundColor = $Host.UI.RawUI.BackgroundColor
                         $Host.UI.RawUI.ForegroundColor = "Magenta"
                         $Host.UI.RawUI.BackgroundColor = "Green"
                         
@@ -49,7 +51,15 @@ function ps1_run_command {
         } elseif($type -eq "text") {
             Invoke-Expression $context
         }
+    } catch [System.Management.Automation.PipelineStoppedException] {
+        Write-Host "Command was interrupted -- 1: $_"
+    } catch {
+        Write-Host "Command was interrupted -- 2: $_"
+    } finally {
+        $Host.UI.RawUI.ForegroundColor = $defaultForegroundColor
+        $Host.UI.RawUI.BackgroundColor = $defaultBackgroundColor
     }
+}
 
 function nav_to_dir {
     # param ($dirURL)
@@ -134,7 +144,7 @@ function req_service_initiate {
     function frontend_service {
         $s_ack = make_service_acknowledgement
         if($s_ack) {
-            $file_path = "../backend/requirements--frontend.txt"
+            $file_path = "../requirements/requirements--frontend.txt"
             ps1_run_command -type "file" -url "$file_path"
         }
     }
@@ -143,7 +153,7 @@ function req_service_initiate {
         $s_ack = make_service_acknowledgement
         if($s_ack) {
             $commands = @(
-                "python -m pip install -r requirements.txt",
+                "python -m pip install -r ../requirements/requirements.txt",
                 "python manage.py createdb_and_makemigrations",
                 "python manage.py migrate"
             )

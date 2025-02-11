@@ -86,4 +86,12 @@ function __init_start__ {
     }
 }
 
+function initPyVenv {
+    param (
+        [string]$venvDir = "ccs_venv"
+    )
+    
+    activate_venv $venvDir        # check & run activate virtual enviornment
+}
+
 __init_start__    #   initialize
