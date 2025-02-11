@@ -9,7 +9,7 @@ function __init__ {
             
             # fetch-and-run global-functions.ps1 Contents
                 Invoke-Expression (Get-Content "./scripts/global-functions.ps1" -Raw)      
-            activate_venv                           # run activate virtual enviornment
+            activate_venv "ccs_venv"                          # run activate virtual enviornment
             nav_to_dir $dirName                     # call to function
             req_service_initiate $dirName           # call to function
         } else {

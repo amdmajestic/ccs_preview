@@ -77,8 +77,10 @@ function __init_start__ {
     ) {
         Set_EP_RS_Prc               # call to function
         if ($service_code -eq $global:FRONTEND_SERVICE_CODE) {
+            $Host.UI.RawUI.WindowTitle = "CCS Frontend Terminal"
             & "$global:filePath/scripts/_frontend_service" -behav "run-f"       # run _frontend_service
         } elseif ($service_code -eq $global:BACKEND_SERVICE_CODE) {
+            $Host.UI.RawUI.WindowTitle = "CCS Backend Terminal"
             & "$global:filePath//scripts/_backend_service" -behav "run-b"       # run _backend_service
         }
     }
