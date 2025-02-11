@@ -1,6 +1,14 @@
 # Ignore Django migrations
 migrations/
 
+# Django specific files
+*.log
+local_settings.py
+*.sqlite3
+db.sqlite3
+myproject/settings/local.py  # Example of a settings file that shouldn't be committed
+*.pyc
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -36,6 +44,7 @@ MANIFEST
 pip-log.txt
 pip-delete-this-directory.txt
 
+
 # Unit test / coverage reports
 htmlcov/
 .tox/
@@ -55,14 +64,6 @@ cover/
 *.mo
 *.pot
 
-# Django stuff:
-*.log
-local_settings.py
-*.sqlite3
-db.sqlite3
-myproject/settings/local.py  # Example of a settings file that shouldn't be committed
-*.pyc
-
 # Content files
 backend/content/media
 
@@ -76,14 +77,22 @@ frontend/node_modules/
 frontend/build/
 frontend/*.log
 frontend/.env
+frontend/dist/
+frontend.vite/
+
+# Frontend build artifacts (React/Vite)
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
 # Docker
 docker-compose.override.yml
 .docker/
-
-# Frontend build artifacts (React/Vite)
-frontend/dist/
-frontend.vite/
 
 # Environments
 # Virtual environments
@@ -97,10 +106,10 @@ venv.bak/
 # Pipenv
 Pipfile.lock
 
-# poetry
+# Poetry
 poetry.lock
 
-# pdm
+# PDM
 .pdm.toml
 .pdm-python
 .pdm-build/
@@ -144,3 +153,11 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# Editor directories and files
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
