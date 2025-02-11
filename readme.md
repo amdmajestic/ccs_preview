@@ -1,8 +1,8 @@
-# Campus Coordination System
+# Campus Coordination System(CCS)
 
-This project is developed as part of the Final Year Project for the **Bachelor of Science in Software Engineering (BSSE)** program at **FUSST**, batch **FA-202**. The **Campus Coordination System** is designed to assist in managing and coordinating campus-related tasks, focusing on intelligent and manual timetable and course allocation.
+This project is developed as part of the Final Year Project for the **Bachelor of Science in Software Engineering (BSSE)** program at **FUSST**, batch **FA-2021**. The **CCS** is designed to assist in managing and coordinating campus-related tasks, focusing on intelligent and manual timetable and course allocation.
 
-## Developers
+## Software Engineers
 
 - **Mohammad Ahmad Malik**
 - **Adnan Nasir Sheikh**
@@ -53,62 +53,156 @@ This project is developed as part of the Final Year Project for the **Bachelor o
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/yourusername/campus-coordination-system.git
-    cd campus-coordination-system
+    git clone https://github.com/amdmajestic/FYP_CCS.git
+    cd FYP_CCS
     ```
 
-2. **Backend Setup**:
+    #### OR
 
-    - Navigate to the `backend` directory:
 
-        ```bash
-        cd backend
-        ```
+    *(paste on .)*
 
-    - Create a virtual environment and activate it (optional but recommended):
+   ```bash
+    git clone https://github.com/amdmajestic/FYP_CCS.git .
+    ```
 
-        ```bash
-        python -m venv venv
-        source venv/bin/activate  # On Windows: venv\Scripts\activate
-        ```
+3. **Configuaration**:
 
-    - Install dependencies:
+    + Manual Config:
+     
+        - Backend Setup:
 
-        ```bash
-        pip install -r requirements.txt
-        ```
+            - Create a virtual environment(if not exist):
+              
+                ```bash
+                python -m venv ccs_venv
+                ```
+                  
+            -  Activate virtual environment:
+    
+                ```bash
+                source venv/bin/activate
+                ```
+            
+                #### On Windows:
+               
+                ```bash
+                ccs_venv\Scripts\activate
+                ```
+    
+            - Navigate to the `backend` directory:
+        
+                ```bash
+                cd backend
+                ```
+        
+            - Install dependencies:
+        
+                ```bash
+                pip install -r requirements.txt
+                ```
+  
+            - Initialize database migrations:
+        
+                ```bash
+                python manage.py makemigrations
+                ```
+         
+                #### OR
+              
+                ```bash
+                python manage.py createdb_and_makemigrations
+                ```
+        
+            - Apply database migrations:
+        
+                ```bash
+                python manage.py migrate
+                ```
+        
+            - Run the Django development server:
+        
+                ```bash
+                python manage.py runserver
+                ```
 
-    - Apply database migrations:
+        - Frontend Setup:
+        
+            - Navigate to the `frontend` directory:
+        
+                ```bash
+                cd ../frontend
+                ```
+        
+            - Install dependencies:
+         
+                - Copy content from `backend/requirements--frontend.txt` file.
+                  
+                - Pate the content in the terminal:
+            
+                    ```bash
+                    npm install <?pasted-content>
+                    ```
+        
+            - Run the development server:
+        
+                ```bash
+                npm run dev
+                ```
+                
+    + Auto Config:
+      
+        - Initialize:
+          
+            - Run Comand in `Windows PowerShell`:
+              
+                ```bash
+                iex (gc ./scripts/init-services.ps1 -Raw)
+                ```
+                
+          - Start Service:
+                
+            - Enter `f` *OR* `frontend` for 'frontend service':
+              
+                ```bash
+                Enter:  'b'(backend) or 'f'(frontend): f
+                ```
+                
+                - Choose `y` *OR* `n` for initialize:
+             
+                ```bash
+                Do you want to initiate `frontend service` and its files?
+                For Yes or No, enter (y/n)
+                y
+                ```
+                
+            - Enter `b` OR `backend` for 'backend service':
+         
+                ```bash
+                Enter:  'b'(backend) or 'f'(frontend): b
+                ```
+                
+                - Choose `y` OR `n` for initialize:
+             
+                ```bash
+                Do you want to initiate `backend service` and its files?
+                For Yes or No, enter (y/n)
+                y
+                ```
+                
+          - Run Service:                
 
-        ```bash
-        python manage.py migrate
-        ```
-
-    - Run the Django development server:
-
-        ```bash
-        python manage.py runserver
-        ```
-
-3. **Frontend Setup**:
-
-    - Navigate to the `frontend` directory:
-
-        ```bash
-        cd ../frontend
-        ```
-
-    - Install dependencies:
-
-        ```bash
-        npm install
-        ```
-
-    - Run the development server:
-
-        ```bash
-        npm run dev
-        ```
+            - Run 'backend service' by typing `djrb`:
+         
+                ```bash
+                ...\backend> djrb
+                ```
+                
+            - Run 'frontend service' by typing `djrf`:
+         
+                ```bash
+                ...\frontend> djrf
+                ```
 
 4. **Using Docker (Optional)**:
     - To run both the frontend and backend with Docker, use the provided `docker-compose.yml` file:
