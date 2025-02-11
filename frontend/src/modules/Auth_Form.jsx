@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import api from "/src/functions/api";
 import { ACCESS_TOKEN, REFRESH_TOKEN, USER_DATA_OBJECT } from "/src/functions/constants";
 
-import { createAndShowAlert }  from "/src/functions/__generic_modules";
+import { createAndShowAlert }  from "/src/functions/react_segments";
 
 class Auth_Form extends Component {
   constructor(props) {

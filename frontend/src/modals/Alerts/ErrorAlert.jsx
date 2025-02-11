@@ -34,7 +34,7 @@ class ErrorAlert extends Component {
       <>
         {this.state.isVisible && (
           <div
-            className="fixed top-1/4 left-1/2 transform -translate-x-1/2 w-full max-w-lg p-4 bg-red-500 text-white rounded-lg shadow-lg flex items-start justify-between transition-all duration-300"
+            className="absolute top-1/4 left-1/2 transform -translate-x-1/2 w-full max-w-lg p-4 bg-red-500 text-white rounded-lg shadow-lg flex items-start justify-between transition-all duration-300"
           >
             {/* Fixed ✖ symbol */}
             <span className="text-4xl absolute top-0 left-0 ml-4 mt-2">🚫</span>

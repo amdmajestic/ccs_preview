@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import _COMPONENTS_ from "../components/__components_traits";
+import _MODULES_ from "/src/modules/__modules_traits";
 
 class Register extends Component {
   componentDidMount() {
@@ -8,7 +8,7 @@ class Register extends Component {
   }
 
   render() {
-    return <_COMPONENTS_.Auth_Form route="/api/instructors/register/" method="register" />;
+    return <_MODULES_.Auth_Form route="/api/instructors/register/" method="register" />;
   }
 }
 

@@ -20,7 +20,7 @@ const SuccessAlert = () => {
         <>
         {isVisible && (
             <div
-                className="fixed top-1/4 left-1/2 transform -translate-x-1/2 w-full max-w-lg p-4 bg-green-500 text-white rounded-lg shadow-lg flex items-center justify-between transition-all duration-300"
+                className="absolute top-1/4 left-1/2 transform -translate-x-1/2 w-full max-w-lg p-4 bg-green-500 text-white rounded-lg shadow-lg flex items-center justify-between transition-all duration-300"
             >
             <div className="flex items-center">
                 <span className="text-xl">✓</span>

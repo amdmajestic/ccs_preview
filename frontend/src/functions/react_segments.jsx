@@ -1,5 +1,5 @@
 import { createRoot } from "react-dom/client";
-import { default as _M_ } from "/src/modules/__modules_traits";
+import { default as _M_ } from "/src/modals/__modals_traits";
 
 const createAndShowAlert = (type, message, onlyNew, interval=5000) => {
     const alertsContainer = document.getElementById('alerts-container');

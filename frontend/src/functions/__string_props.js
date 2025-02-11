@@ -1,3 +1,6 @@
+/**  The Properties defined in this file should also be defined in "<project-folder>/stringExtensions.d.ts"   **/
+
+
 /**
  * Converts a string to sentence case.
  * @returns {string} The string in sentence case.
@@ -15,6 +18,7 @@ String.prototype.toSentenceCase = function() {
 String.prototype.stringToBool = function() {
     const value = this.trim().toLowerCase();
         return value === 'true' || value === '1';
+        // return value == 'true' || value == '1';
         //  || value === 'yes';
 };
 

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import api from "/src/functions/api";
-import { createAndShowAlert } from "/src/functions/__generic_modules";
+import { createAndShowAlert } from "../functions/react_segments";
 
 class Instructor_Profile extends Component {
   constructor(props) {

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import _COMPONENTS_ from "/src/components/__components_traits";
-import SuccessAlert from "../modules/Alerts/SuccessAlert";
+import _MODULES_ from "/src/modules/__modules_traits";
 
 class Login extends Component {
   componentDidMount() {
@@ -11,7 +10,7 @@ class Login extends Component {
   render() {
     return (
       <>
-        <_COMPONENTS_.Auth_Form route="/api/instructors/login/" method="login" />;
+        <_MODULES_.Auth_Form route="/api/instructors/login/" method="login" />;
       </>
     )
   }

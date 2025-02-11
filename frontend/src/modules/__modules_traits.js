@@ -1,16 +1,10 @@
-import SuccessAlert from "./Alerts/SuccessAlert";
-import WarnAlert from "./Alerts/WarnAlert";
-import InfoAlert from "./Alerts/InfoAlert";
-import ErrorAlert from "./Alerts/ErrorAlert";
+import ProtectedRoute from "./ProtectedRoute";
+import Auth_Form from './Auth_Form';
+
 
 const _MODULES_ = {
-    ALERTS: {
-        SuccessAlert,
-        WarnAlert,
-        InfoAlert,
-        ErrorAlert,
-    },
+    ProtectedRoute,
+    Auth_Form,
 }
-
 
 export default _MODULES_;

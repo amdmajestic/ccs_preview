@@ -1,13 +1,10 @@
-import ProtectedRoute from "./ProtectedRoute";
-import Auth_Form from './Auth_Form';
 import Header from "./Header"
+import RegisterBox from "./RegisterBox";
 
 
 const _COMPONENTS_ = {
-    ProtectedRoute,
-    Auth_Form,
     Header,
+    RegisterBox,
 }
-
 
 export default _COMPONENTS_;

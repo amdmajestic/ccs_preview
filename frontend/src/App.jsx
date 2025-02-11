@@ -6,6 +6,7 @@ import * as _R_R_D_ from "react-router-dom";
 import { FaSun, FaMoon } from "react-icons/fa"; // Import icons
 import { default as _P_ } from './pages/__pages_traits';
 import { default as _C_ } from "./components/__components_traits";
+import { default as _MD_ } from "./modules/__modules_traits";
 
 class App extends Component {
   constructor(props) {
@@ -173,9 +174,9 @@ class App extends Component {
 function _ProtectedCall({ address: Address, onAuth }) {
   return (
     <>
-      <_C_.ProtectedRoute onAuth={onAuth} >
+      <_MD_.ProtectedRoute onAuth={onAuth} >
         {!React.isValidElement(Address) ? <Address /> : Address}
-      </_C_.ProtectedRoute>
+      </_MD_.ProtectedRoute>
     </>
   );
 }

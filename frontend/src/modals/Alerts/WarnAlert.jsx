@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class InfoAlert extends Component {
+class WarnAlert extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -24,9 +24,9 @@ class InfoAlert extends Component {
     // Cleanup timer on unmount
     clearTimeout(this.timer);
   }
-  
+
   render() {
-    const { message, onlyNew: showOnlyNew, defaultMessage = 'This is an informational message.' } = this.props;
+    const { message, onlyNew: showOnlyNew, defaultMessage = 'Warning!' } = this.props;
     const alertMessage = message || ""; // Use the message prop or an empty string if null/undefined
     const showOnlyNewFlag = showOnlyNew === true;
 
@@ -34,10 +34,10 @@ class InfoAlert extends Component {
       <>
         {this.state.isVisible && (
           <div
-            className="fixed top-1/4 left-1/2 transform -translate-x-1/2 w-full max-w-lg p-4 bg-blue-500 text-white rounded-lg shadow-lg flex items-start justify-between transition-all duration-300"
+            className="absolute top-1/4 left-1/2 transform -translate-x-1/2 w-full max-w-lg p-4 bg-yellow-500 text-white rounded-lg shadow-lg flex items-start justify-between transition-all duration-300"
           >
-            {/* Fixed ℹ symbol */}
-            <span className="text-4xl absolute top-0 left-0 ml-4 mt-2">ⓘ</span>
+            {/* Fixed ⚠ symbol */}
+            <span className="text-4xl absolute top-0 left-0 ml-4 mt-2">⚠︎</span>
 
             <div className="flex flex-col items-start ml-12">
               {/* If showOnlyNew is false, display defaultMessage */}
@@ -63,4 +63,4 @@ class InfoAlert extends Component {
   }
 }
 
-export default InfoAlert;
+export default WarnAlert;
