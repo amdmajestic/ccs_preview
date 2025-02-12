@@ -3,6 +3,9 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 
+// Importing extra props
+  import './functions/__string_props';
+
 sessionStorage.setItem('logout_route', '/logout')
 
 window.$_LOGOUT_ROUTE = "/logout"
