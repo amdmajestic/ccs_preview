@@ -2,6 +2,7 @@
     "compilerOptions": {
       "baseUrl": ".",  // Set base URL to root of the project
     "paths": {
+    "/content/*": ["public/*"],  // Map /content/* to public/*
     "/src/*": ["src/*"]  // Map /src/* to src/*
     }
 },

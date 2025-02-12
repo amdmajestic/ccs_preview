@@ -1,5 +1,7 @@
-const ACCESS_TOKEN = 'ccs_access_token_id';
-const REFRESH_TOKEN = 'ccs_refresh_token_id';
-const USER_DATA_OBJECT = 'ccs_user_data_object'
+const { VITE_ACCESS_TOKEN, VITE_REFRESH_TOKEN, VITE_USER_DATA_OBJECT } = import.meta.env;
 
-export {ACCESS_TOKEN, REFRESH_TOKEN, USER_DATA_OBJECT};
+export {
+    VITE_ACCESS_TOKEN       as ACCESS_TOKEN,
+    VITE_REFRESH_TOKEN      as REFRESH_TOKEN, 
+    VITE_USER_DATA_OBJECT   as USER_DATA_OBJECT,
+};

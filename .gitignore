@@ -76,7 +76,6 @@ backend/content/media
 frontend/node_modules/
 frontend/build/
 frontend/*.log
-frontend/.env
 frontend/dist/
 frontend.vite/
 
