@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import { FaChalkboardTeacher as NavDashboardIcon, FaHome as NavHomeIcon, FaSignInAlt as NavLoginIcon, FaUserPlus as NavRegsiterIcon, FaTable as NavCrcAlcIcon, FaUserEdit as NavUserProfileIcon, FaBars as NavHamburgerBtnIcon, FaBackspace as UserLogoutBtnIcon } from "react-icons/fa"; // Fa icons library
 import { USER_DATA_OBJECT } from "/src/functions/constants";
+import _ASSETS_ from '/src/assets/__assets_traits';
+import { default as _R_ } from "../directives/routes";
 
 class Header extends Component {
   constructor(props) {
@@ -44,7 +46,7 @@ class Header extends Component {
         { loggedIn && (
           <NavLink
             onClick={this.restateMobileMenu}
-              to="/dashboard"
+              to={_R_['route-dashboard']}
               className={({ isActive }) =>
                 isActive
                   ? "text-yellow-400 dark:text-sky-400 "+ (isMobileMenuOpen ? "hidden" : "flex") +" items-center space-x-1 border-b-2 dark:border-sky-400 pointer-events-none cursor-not-allowed py-1 px-3 rounded-md backdrop-blur-sm bg-opacity-30 hover:bg-opacity-40 transition-all"
@@ -58,7 +60,7 @@ class Header extends Component {
         { !loggedIn && (
           <NavLink
           onClick={this.restateMobileMenu}
-            to="/"
+            to={_R_['route-home']}
             className={({ isActive }) =>
               isActive
                 ? "text-yellow-400 dark:text-sky-400 "+ (isMobileMenuOpen ? "hidden" : "flex") +" items-center space-x-1 border-b-2 dark:border-sky-400 pointer-events-none cursor-not-allowed py-1 px-3 rounded-md backdrop-blur-sm bg-opacity-30 hover:bg-opacity-40 transition-all"
@@ -72,7 +74,7 @@ class Header extends Component {
         { !loggedIn && (
           <NavLink
             onClick={this.restateMobileMenu}
-            to="/login"
+            to={_R_['route-login']}
             className={({ isActive }) =>
               isActive
                   ? "text-yellow-400 dark:text-sky-400 "+ (isMobileMenuOpen ? "hidden" : "flex") +" items-center space-x-1 border-b-2 dark:border-sky-400 pointer-events-none cursor-not-allowed py-1 px-3 rounded-md backdrop-blur-sm bg-opacity-30 hover:bg-opacity-40 transition-all"
@@ -86,7 +88,7 @@ class Header extends Component {
         { !loggedIn && (
           <NavLink
             onClick={this.restateMobileMenu}
-            to="/register"
+            to={_R_['route-register']}
             className={({ isActive }) =>
               isActive
                   ? "text-yellow-400 dark:text-sky-400 "+ (isMobileMenuOpen ? "hidden" : "flex") +" items-center space-x-1 border-b-2 dark:border-sky-400 pointer-events-none cursor-not-allowed py-1 px-3 rounded-md backdrop-blur-sm bg-opacity-30 hover:bg-opacity-40 transition-all"
@@ -100,7 +102,7 @@ class Header extends Component {
         { loggedIn && (
           <NavLink
             onClick={this.restateMobileMenu}
-            to="/course-allocation"
+            to={_R_['route-course-allocation']}
             className={({ isActive }) =>
               isActive
                   ? "text-yellow-400 dark:text-sky-400 "+ (isMobileMenuOpen ? "hidden" : "flex") +" items-center space-x-1 border-b-2 dark:border-sky-400 pointer-events-none cursor-not-allowed py-1 px-3 rounded-md backdrop-blur-sm bg-opacity-30 hover:bg-opacity-40 transition-all"
@@ -114,7 +116,7 @@ class Header extends Component {
         { loggedIn && (
           <NavLink
             onClick={this.restateMobileMenu}
-            to="/timetable-management"
+            to={_R_['route-timetable-management']}
             className={({ isActive }) =>
               isActive
                   ? "text-yellow-400 dark:text-sky-400 "+ (isMobileMenuOpen ? "hidden" : "flex") +" items-center space-x-1 border-b-2 dark:border-sky-400 pointer-events-none cursor-not-allowed py-1 px-3 rounded-md backdrop-blur-sm bg-opacity-30 hover:bg-opacity-40 transition-all"
@@ -128,7 +130,7 @@ class Header extends Component {
         { loggedIn && (
           <NavLink
             onClick={this.restateMobileMenu}
-            to={`/instructor/profile/${instructorId}`}
+            to={`${_R_['route-self-profile-view']}${instructorId}`}
             className={({ isActive }) =>
               isActive
                   ? "text-yellow-400 dark:text-sky-400 "+ (isMobileMenuOpen ? "hidden" : "flex") +" items-center space-x-1 border-b-2 dark:border-sky-400 pointer-events-none cursor-not-allowed py-1 px-3 rounded-md backdrop-blur-sm bg-opacity-30 hover:bg-opacity-40 transition-all"
@@ -166,10 +168,10 @@ class Header extends Component {
           <div className="flex items-center justify-between">
             {/* Logo/Branding - aligned to the left */}
             <div className="flex items-center ml-0">
-              <NavLink to="/" className="hover:text-gray-300">
+              <NavLink to={_R_['route-home']} className="hover:text-gray-300">
                 <div className="relative w-12 h-12 rounded-md overflow-hidden transition-all duration-300 group hover:scale-110 hover:shadow-[0px_0px_20px_10px_whitesmoke]">
                   <img
-                    src={vr_media("ccs-logo.png")}
+                    src={ _ASSETS_.CcsLogo }
                     // Add Fallback Image
                     onError={(e) => {
                       e.target.onerror = null;  // To prevent infinite loops if the fallback image fails as well

@@ -1,5 +1,6 @@
 import React, { Component, Suspense, useEffect } from "react";
 import {ACCESS_TOKEN, REFRESH_TOKEN, USER_DATA_OBJECT} from '/src/functions/constants';
+import { default as _R_, BASE_URL } from "./directives/routes";
 import "./App.css";
 
 import * as _R_R_D_ from "react-router-dom";
@@ -82,7 +83,7 @@ class App extends Component {
 
     return (
       <div className="min-h-screen w-full flex flex-col justify-self-center">
-        <_R_R_D_.BrowserRouter>          
+        <_R_R_D_.BrowserRouter basename={BASE_URL}>
           <this.RouteWatcher />
           <_C_.Header />
           <div
@@ -104,7 +105,8 @@ class App extends Component {
             <Suspense fallback={<div>Loading...</div>}>
               <_R_R_D_.Routes>
                 <_R_R_D_.Route
-                  index
+                  exact
+                  path={_R_['route-home']}
                   element={<_ProtectedCall 
                             onAuth={false} 
                             address={
@@ -116,42 +118,42 @@ class App extends Component {
                 />
                 <_R_R_D_.Route
                   exact
-                  path="/login"
+                  path={_R_['route-login']}
                   element={<_ProtectedCall 
                               onAuth={false} 
                               address={_P_.Login}
                           />}
                 />
                 <_R_R_D_.Route
-                  path="/register"
+                  path={_R_['route-register']}
                   element={<_ProtectedCall 
                               onAuth={false} 
                               address={_RegisterAndLogout}
                           />}
                 />
                 <_R_R_D_.Route
-                  path="/course-allocation"
+                  path={_R_['course-allocation']}
                   element={<_ProtectedCall
                             onAuth={true} 
                             address={_P_.Course_Allocation}
                           />}
                 />
                 <_R_R_D_.Route
-                  path="/timetable-management"
+                  path={_R_['route-timetable-management']}
                   element={<_ProtectedCall
                             onAuth={true} 
-                            address={<_R_R_D_.Navigate to={"/404-NotFound"} />}
+                            address={<_R_R_D_.Navigate to={_R_.errorPageUrls['404']} />}
                           />}
                 />
                 <_R_R_D_.Route
-                  path={"/instructor/profile/"+instructorId}
+                  path={_R_['route-instructor-profile-view']+ instructorId}
                   element={<_ProtectedCall 
                               onAuth={true} 
                               address={<_P_.Instructor_Profile instructorId={instructorId} />} 
                             />}
                 />
                 <_R_R_D_.Route
-                  path="/dashboard"
+                  path={_R_['route-dashboard']}
                   element={<_ProtectedCall 
                             onAuth={true} 
                             address={_P_.Dashboard}
@@ -184,7 +186,7 @@ function _ProtectedCall({ address: Address, onAuth }) {
 function _Logout() {
   localStorage_clearLoginCredentials();
   return <>
-    <_R_R_D_.Navigate to="/login" />;
+    <_R_R_D_.Navigate to={_R_['route-login']} />;
   </> 
 }
 
