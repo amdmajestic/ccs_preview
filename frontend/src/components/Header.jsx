@@ -36,6 +36,18 @@ class Header extends Component {
     }));
   }
 
+  getClassStyles (linkIsActive, isMobileMenuOpen) {    
+    const styleBaseClasses = 'items-center space-x-1 py-1 px-3 rounded-md backdrop-blur-sm dark:backdrop-blur-md bg-opacity-30 hover:bg-opacity-40 transition-all';
+    const styleActiveClasses = 'text-yellow-400 dark:text-sky-400 border-b-2 dark:border-sky-400 pointer-events-none cursor-not-allowed';
+    const styleInactiveClasses = 'flex hover:text-gray-300 dark:hover:text-sky-300';
+
+    if (linkIsActive) {
+      return `${styleBaseClasses}  ${styleActiveClasses}  ${isMobileMenuOpen ? 'hidden' : 'flex'}`;
+    } else {
+      return `${styleBaseClasses}  ${styleInactiveClasses}  ${isMobileMenuOpen && 'justify-self-center'}`;
+    }
+  }
+
   createHeaderLinks = () => {
     const { isMobileMenuOpen, instructorId } = this.state;
     const loggedIn = localStorage.getItem(USER_DATA_OBJECT) ? true : false;
@@ -47,10 +59,8 @@ class Header extends Component {
           <NavLink
             onClick={this.restateMobileMenu}
               to={_R_['route-dashboard']}
-              className={({ isActive }) =>
-                isActive
-                  ? "text-yellow-400 dark:text-sky-400 "+ (isMobileMenuOpen ? "hidden" : "flex") +" items-center space-x-1 border-b-2 dark:border-sky-400 pointer-events-none cursor-not-allowed py-1 px-3 rounded-md backdrop-blur-sm bg-opacity-30 hover:bg-opacity-40 transition-all"
-                  : "hover:text-gray-300 dark:hover:text-sky-300 "+ (isMobileMenuOpen && "justify-self-center") +" flex items-center space-x-1 py-1 px-3 rounded-md backdrop-blur-sm dark:backdrop-blur-md bg-opacity-30 hover:bg-opacity-40 transition-all"
+              className={({ isActive }) => {
+                this.getClassStyles(isActive, isMobileMenuOpen)}
               }
             >
             <NavDashboardIcon />
@@ -61,10 +71,8 @@ class Header extends Component {
           <NavLink
           onClick={this.restateMobileMenu}
             to={_R_['route-home']}
-            className={({ isActive }) =>
-              isActive
-                ? "text-yellow-400 dark:text-sky-400 "+ (isMobileMenuOpen ? "hidden" : "flex") +" items-center space-x-1 border-b-2 dark:border-sky-400 pointer-events-none cursor-not-allowed py-1 px-3 rounded-md backdrop-blur-sm bg-opacity-30 hover:bg-opacity-40 transition-all"
-                  : "hover:text-gray-300 dark:hover:text-sky-300 "+ (isMobileMenuOpen && "justify-self-center") +" flex items-center space-x-1 py-1 px-3 rounded-md backdrop-blur-sm dark:backdrop-blur-md bg-opacity-30 hover:bg-opacity-40 transition-all"
+            className={({ isActive }) => 
+              this.getClassStyles(isActive, isMobileMenuOpen)
             }
           >
             <NavHomeIcon />
@@ -75,10 +83,8 @@ class Header extends Component {
           <NavLink
             onClick={this.restateMobileMenu}
             to={_R_['route-login']}
-            className={({ isActive }) =>
-              isActive
-                  ? "text-yellow-400 dark:text-sky-400 "+ (isMobileMenuOpen ? "hidden" : "flex") +" items-center space-x-1 border-b-2 dark:border-sky-400 pointer-events-none cursor-not-allowed py-1 px-3 rounded-md backdrop-blur-sm bg-opacity-30 hover:bg-opacity-40 transition-all"
-                  : "hover:text-gray-300 dark:hover:text-sky-300 "+ (isMobileMenuOpen && "justify-self-center") +" flex items-center space-x-1 py-1 px-3 rounded-md backdrop-blur-sm dark:backdrop-blur-md bg-opacity-30 hover:bg-opacity-40 transition-all"
+            className={({ isActive }) => 
+              this.getClassStyles(isActive, isMobileMenuOpen)
             }
           >
             <NavLoginIcon />
@@ -88,11 +94,9 @@ class Header extends Component {
         { !loggedIn && (
           <NavLink
             onClick={this.restateMobileMenu}
-            to={_R_['route-register']}
-            className={({ isActive }) =>
-              isActive
-                  ? "text-yellow-400 dark:text-sky-400 "+ (isMobileMenuOpen ? "hidden" : "flex") +" items-center space-x-1 border-b-2 dark:border-sky-400 pointer-events-none cursor-not-allowed py-1 px-3 rounded-md backdrop-blur-sm bg-opacity-30 hover:bg-opacity-40 transition-all"
-                  : "hover:text-gray-300 dark:hover:text-sky-300 "+ (isMobileMenuOpen && "justify-self-center") +" flex items-center space-x-1 py-1 px-3 rounded-md backdrop-blur-sm dark:backdrop-blur-md bg-opacity-30 hover:bg-opacity-40 transition-all"
+            to={_R_['route-login']}
+            className={({ isActive }) => 
+              this.getClassStyles(isActive, isMobileMenuOpen)
             }
           >
             <NavRegsiterIcon />
@@ -103,10 +107,8 @@ class Header extends Component {
           <NavLink
             onClick={this.restateMobileMenu}
             to={_R_['route-course-allocation']}
-            className={({ isActive }) =>
-              isActive
-                  ? "text-yellow-400 dark:text-sky-400 "+ (isMobileMenuOpen ? "hidden" : "flex") +" items-center space-x-1 border-b-2 dark:border-sky-400 pointer-events-none cursor-not-allowed py-1 px-3 rounded-md backdrop-blur-sm bg-opacity-30 hover:bg-opacity-40 transition-all"
-                  : "hover:text-gray-300 dark:hover:text-sky-300 "+ (isMobileMenuOpen && "justify-self-center") +" flex items-center space-x-1 py-1 px-3 rounded-md backdrop-blur-sm dark:backdrop-blur-md bg-opacity-30 hover:bg-opacity-40 transition-all"
+            className={({ isActive }) => 
+              this.getClassStyles(isActive, isMobileMenuOpen)
             }
           >
             <NavCrcAlcIcon />
@@ -117,10 +119,8 @@ class Header extends Component {
           <NavLink
             onClick={this.restateMobileMenu}
             to={_R_['route-timetable-management']}
-            className={({ isActive }) =>
-              isActive
-                  ? "text-yellow-400 dark:text-sky-400 "+ (isMobileMenuOpen ? "hidden" : "flex") +" items-center space-x-1 border-b-2 dark:border-sky-400 pointer-events-none cursor-not-allowed py-1 px-3 rounded-md backdrop-blur-sm bg-opacity-30 hover:bg-opacity-40 transition-all"
-                  : "hover:text-gray-300 dark:hover:text-sky-300 "+ (isMobileMenuOpen && "justify-self-center") +" flex items-center space-x-1 py-1 px-3 rounded-md backdrop-blur-sm dark:backdrop-blur-md bg-opacity-30 hover:bg-opacity-40 transition-all"
+            className={({ isActive }) => 
+              this.getClassStyles(isActive, isMobileMenuOpen)
             }
           >
             <NavCrcAlcIcon />
@@ -131,10 +131,8 @@ class Header extends Component {
           <NavLink
             onClick={this.restateMobileMenu}
             to={`${_R_['route-self-profile-view']}${instructorId}`}
-            className={({ isActive }) =>
-              isActive
-                  ? "text-yellow-400 dark:text-sky-400 "+ (isMobileMenuOpen ? "hidden" : "flex") +" items-center space-x-1 border-b-2 dark:border-sky-400 pointer-events-none cursor-not-allowed py-1 px-3 rounded-md backdrop-blur-sm bg-opacity-30 hover:bg-opacity-40 transition-all"
-                  : "hover:text-gray-300 dark:hover:text-sky-300 "+ (isMobileMenuOpen && "justify-self-center") +" flex items-center space-x-1 py-1 px-3 rounded-md backdrop-blur-sm dark:backdrop-blur-md bg-opacity-30 hover:bg-opacity-40 transition-all"
+            className={({ isActive }) => 
+              this.getClassStyles(isActive, isMobileMenuOpen)
             }
           >
             <NavUserProfileIcon />
@@ -145,10 +143,8 @@ class Header extends Component {
           <NavLink
             onClick={this.restateMobileMenu}
             to={$_LOGOUT_ROUTE}
-            className={({ isActive }) =>
-              isActive
-                  ? "text-yellow-400 dark:text-sky-400 "+ (isMobileMenuOpen ? "hidden" : "flex") +" items-center space-x-1 border-b-2 dark:border-sky-400 pointer-events-none cursor-not-allowed py-1 px-3 rounded-md backdrop-blur-sm bg-opacity-30 hover:bg-opacity-40 transition-all"
-                  : "hover:text-gray-300 dark:hover:text-sky-300 "+ (isMobileMenuOpen && "justify-self-center") +" flex items-center space-x-1 py-1 px-3 rounded-md backdrop-blur-sm dark:backdrop-blur-md bg-opacity-30 hover:bg-opacity-40 transition-all"
+            className={({ isActive }) => 
+              this.getClassStyles(isActive, isMobileMenuOpen)
             }
           >
             <UserLogoutBtnIcon />
