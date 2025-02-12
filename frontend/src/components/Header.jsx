@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
-import { FaChalkboardTeacher as NavDashboardIcon, FaHome as NavHomeIcon, FaSignInAlt as NavLoginIcon, FaUserPlus as NavRegsiterIcon, FaTable as NavCrcAlcIcon, FaUserEdit as NavUserProfileIcon, FaBars as NavHamburgerBtnIcon, FaBackspace as UserLogoutBtnIcon } from "react-icons/fa"; // Fa icons library
+import { FaChalkboardTeacher as NavDashboardIcon, FaHome as NavHomeIcon, FaSignInAlt as NavLoginIcon, FaUserPlus as NavRegsiterIcon, FaTable as NavCrcAlcIcon, FaUserEdit as NavUserProfileIcon, FaBars as NavHamburgerBtnIcon, FaBackspace as UserLogoutBtnIcon, FaServicestack as NavApisBtn } from "react-icons/fa"; // Fa icons library
 import { USER_DATA_OBJECT } from "/src/functions/constants";
 import _ASSETS_ from '/src/assets/__assets_traits';
 import { default as _R_ } from "../directives/routes";
@@ -113,6 +113,18 @@ class Header extends Component {
           >
             <NavCrcAlcIcon />
             <span>Course Allocation</span>
+          </NavLink>
+        )}
+        { true && (
+          <NavLink
+            onClick={this.restateMobileMenu}
+            to={_R_['route-api-button-table']}
+            className={({ isActive }) => 
+              this.getClassStyles(isActive, isMobileMenuOpen)
+            }
+          >
+            <NavApisBtn />
+            <span>Api Buttons</span>
           </NavLink>
         )}
         { loggedIn && (

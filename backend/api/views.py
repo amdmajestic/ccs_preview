@@ -5,6 +5,10 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from .models import Instructor
 from .serializers import GenericUserSerializer, GenericUserLoginSerializer, InstructorCreateSerializer, InstructorUpdateSerializer
 
+from rest_framework.views import APIView
+import subprocess
+from django.core.management import call_command
+
 class InstructorRegisterView(generics.CreateAPIView):
     queryset = Instructor.objects.all()
     serializer_class = InstructorCreateSerializer
@@ -75,3 +79,37 @@ class InstructorProfileView(generics.RetrieveUpdateDestroyAPIView):
         instructor = self.get_object()
         instructor.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)  # 204 No Content to indicate successful deletion
+    
+
+class FeedFactoryData(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        try:
+            # Path to your Python script
+            # script_path = './api/management/commands/populate_data-real.py'
+
+            # Execute the script using subprocess
+            # result = subprocess.run(['python', script_path], capture_output=True, text=True, check=True)
+
+            # Get the script output and errors
+            # output = result.stdout
+            # errors = result.stderr
+
+            call_command('populate_data-real')
+
+
+            # Return the response in JSON format
+            # return Response({'output': output, 'errors': errors}, status=200)
+
+            # Return a success response
+            return Response({'message': 'Data populated successfully.'}, status=200)
+
+
+        # except subprocess.CalledProcessError as e:
+        #     return Response({'error': f'An error occurred: {e.stderr}'}, status=500)
+
+        
+        except Exception as e:
+            # Handle any exceptions
+            return Response({'error': str(e)}, status=500)

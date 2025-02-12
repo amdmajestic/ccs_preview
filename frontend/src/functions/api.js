@@ -12,11 +12,9 @@ api.interceptors.request.use(
         if(token) {
             config.headers.Authorization = `Bearer ${token}`
         }
-        console.log(config);
+        // console.log(config);
         return config;
     }, (error) => {
-        console.log("AA");
-        
         return Promise.reject(error);
     }
 );

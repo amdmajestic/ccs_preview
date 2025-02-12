@@ -4,6 +4,7 @@ import Register from './Register'
 import Course_Allocation from './Course_Allocation'
 import Instructor_Profile from './Instructor_Profile'
 import Dashboard from './Dashboard'
+import ApiButtonTable from './ApiButtonTable'
 
 import STS_404_NotFound from "./status-pages/STS_404_NotFound";
 
@@ -14,6 +15,8 @@ const _PAGES_ = {
     Dashboard, 
     Course_Allocation,
     Instructor_Profile,
+    ApiButtonTable,
+    
     STATUS_PAGES: {
         _404: STS_404_NotFound,
     },

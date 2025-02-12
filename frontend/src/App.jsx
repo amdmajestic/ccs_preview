@@ -160,6 +160,13 @@ class App extends Component {
                           />}
                 />
                 <_R_R_D_.Route
+                  path={_R_['route-api-button-table']}
+                  element={<_ProtectedCall 
+                            onAuth={false} 
+                            address={_P_.ApiButtonTable}
+                          />}
+                />
+                <_R_R_D_.Route
                   path={$_LOGOUT_ROUTE}
                   Component={_Logout}
                 />

@@ -8,6 +8,7 @@ const __ROUTES__ = {
   "route-timetable-management": "/timetable-management",
   "route-dashboard": "/dashboard",
   "route-self-profile-view": "/instructor/profile/",
+  "route-api-button-table": "/api-button-table",
   // {
   //     declare:
   //     "/instructor/profile/",
