@@ -15,7 +15,7 @@ String.prototype.toSentenceCase = function() {
  * @param {string} str - The string to be converted to a boolean.
  * @return {boolean} Returns `true` if the string represents a truthy value (`'true'`, `'1'`, `'yes'`), otherwise returns `false`.
  */
-String.prototype.stringToBool = function() {
+stringToBool: String.prototype.stringToBool = function() {
     const value = this.trim().toLowerCase();
         return value === 'true' || value === '1';
         // return value == 'true' || value == '1';
@@ -26,7 +26,7 @@ String.prototype.stringToBool = function() {
  * Capitalizes the first letter of each word in a string.
  * @returns {string} The string with each word capitalized.
  */
-Object.defineProperty(String.prototype, 'toTitleCase', {
+toTitleCase: Object.defineProperty(String.prototype, 'toTitleCase', {
     value: function() {
         if (!this) return this;
         return this.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
@@ -50,3 +50,11 @@ Object.defineProperty(String.prototype, 'toTitleCase', {
 //   configurable: false,
 //   enumerable: false
 // });
+
+
+
+// export default {
+//     toSentenceCase: String.prototype.toSentenceCase,
+//     stringToBool: String.prototype.stringToBool,
+//     toTitleCase:  String.prototype.toTitleCase,
+// };
