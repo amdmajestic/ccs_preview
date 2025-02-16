@@ -7,28 +7,28 @@ from .serializers import InstructorSerializer, CourseSerializer, ClassSerializer
 from .utils import allocate_course, automatic_course_allocation
 
 @api_view(['GET'])
-@permission_classes([AllowAny])
+@permission_classes([IsAuthenticated])
 def get_instructors(request):
     instructors = Instructor.objects.all()
     serializer = InstructorSerializer(instructors, many=True)
     return Response(serializer.data)
 
 @api_view(['GET'])
-@permission_classes([AllowAny])
+@permission_classes([IsAuthenticated])
 def get_courses(request):
     courses = Course.objects.all()
     serializer = CourseSerializer(courses, many=True)
     return Response(serializer.data)
 
 @api_view(['GET'])
-@permission_classes([AllowAny])
+@permission_classes([IsAuthenticated])
 def get_classes(request):
     classes = Class.objects.all()
     serializer = ClassSerializer(classes, many=True)
     return Response(serializer.data)
 
 @api_view(['GET'])
-@permission_classes([AllowAny])
+@permission_classes([IsAuthenticated])
 def get_lectures(request):
     lectures = Lecture.objects.all()
     serializer = LectureSerializer(lectures, many=True)
@@ -64,13 +64,13 @@ def allocate(request):
     return Response(result)
 
 @api_view(['POST'])
-@permission_classes([AllowAny])
+@permission_classes([IsAuthenticated])
 def allocate_all_courses(request):
     automatic_course_allocation()
     return Response({"success": "Automatic course allocation completed"})
 
 @api_view(['PATCH'])
-@permission_classes([AllowAny])  # Change this to suit your security needs
+@permission_classes([IsAuthenticated])  # Change this to suit your security needs
 def instructor_profile_update(request, instructor_id):
     """
     View to update the preferences of an instructor.

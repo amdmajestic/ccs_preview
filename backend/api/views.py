@@ -6,7 +6,7 @@ from .models import Instructor
 from .serializers import GenericUserSerializer, GenericUserLoginSerializer, InstructorCreateSerializer, InstructorUpdateSerializer
 
 from rest_framework.views import APIView
-import subprocess
+# import subprocess
 from django.core.management import call_command
 
 class InstructorRegisterView(generics.CreateAPIView):
@@ -82,7 +82,7 @@ class InstructorProfileView(generics.RetrieveUpdateDestroyAPIView):
     
 
 class FeedFactoryData(APIView):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
         try:

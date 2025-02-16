@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import axios from "axios";
 import api from "/src/functions/api";
 import { createAndShowAlert } from "../functions/react_segments";
 
@@ -34,7 +33,7 @@ class Instructor_Profile extends Component {
 
 
   fetchCourses = () => {
-    axios
+    api
       .get('http://localhost:8000/course_allocation/courses/')
       .then((response) => {
         this.setState({

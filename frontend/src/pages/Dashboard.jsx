@@ -17,7 +17,8 @@ class Dashboard extends Component {
   };
 
   render() {
-    const { name } = JSON.parse(localStorage.getItem(USER_DATA_OBJECT)).user;
+    const { name } = JSON.parse(localStorage.getItem(USER_DATA_OBJECT))?.user;
+    // const { name } = JSON.parse(localStorage.getItem(USER_DATA_OBJECT))?.user ?? {};
 
     return (
       <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white">

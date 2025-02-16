@@ -1,4 +1,4 @@
-import { StrictMode } from 'react'
+import { StrictMode, Suspense } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
@@ -17,7 +17,9 @@ window.$_NA_ANY_IMAGE_URL = "https://t3.ftcdn.net/jpg/04/34/72/82/360_F_43472828
 window.$_NA_PROFILE_IMAGE_URL = "https://toppng.com/uploads/preview/instagram-default-profile-picture-11562973083brycehrmyv.png"
 
 createRoot(document.getElementById('root')).render(
-  // <StrictMode>
-    <App />
-  // </StrictMode>,
+  <StrictMode>
+    <Suspense fallback={<div>Loading...</div>}>
+      <App />
+    </Suspense>
+  </StrictMode>,
 )

@@ -4,17 +4,21 @@ import { jwtDecode } from "jwt-decode";
 import api from "/src/functions/api";
 import { REFRESH_TOKEN, ACCESS_TOKEN } from "/src/functions/constants";
 
+import { default as _R_ } from "../directives/references.routes";
+
 class ProtectedRoute extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isAuthorized: null,
+      onAuth: props.onAuth,
     };
   }
   componentDidMount() {
-    this.auth().catch(() => this.setState({ isAuthorized: false }));
+    if(this.state.onAuth!==null) {
+      this.auth().catch(() => this.setState({ isAuthorized: false }));
+    }
   }
-
 
   refreshToken = async () => {
     const refreshToken = localStorage.getItem(REFRESH_TOKEN);
@@ -54,12 +58,12 @@ class ProtectedRoute extends Component {
   };
 
   render() {
-    const { isAuthorized } = this.state;
-    const { onAuth, children } = this.props;
+    const { onAuth, isAuthorized } = this.state;
+    const { children } = this.props;
 
     // alert(isAuthorized+" -- "+ onAuth);
 
-    if (isAuthorized === null) {
+    if ((isAuthorized===null) && (onAuth!==null)) {
       return <div>Loading...</div>;
     }
     
@@ -67,17 +71,24 @@ class ProtectedRoute extends Component {
       <>
         {
           // window.location.reload()
-          (!isAuthorized && onAuth) ? (
-            <Navigate to="/login" />
-          ) 
-          : (!isAuthorized && !onAuth) ? (
+          (
+            onAuth===null
+          ) ? (
+            <>
+              {children}
+            </>
+          ) : (
+              (!isAuthorized && (onAuth===true))
+              || 
+              (isAuthorized && (onAuth===false))
+            ) ? (
+            <Navigate replace to={_R_["route-redirect-app"]} />
+          ) : (
+              (!isAuthorized && (onAuth===false))
+              || 
+              (isAuthorized && (onAuth===true))
+            ) && (
             children
-          ) 
-          : (isAuthorized && onAuth) ? (
-            children
-          ) : (isAuthorized && !onAuth) && (
-            // <Navigate to={-1} />
-              <Navigate to={'/dashboard'} />
           )
         }
       </>
