@@ -81,9 +81,9 @@ class Header extends Component {
     this.restateCurrentPageName(event.currentTarget);
   };
 
-  getClassStyles(linkIsActive, isMobileMenuOpen) {
+  getTailwindClassNames(linkIsActive, isMobileMenuOpen) {
     const styleBaseClasses =
-      "items-center space-x-1 py-1 px-3 rounded-md backdrop-blur-sm dark:backdrop-blur-md bg-opacity-30 hover:bg-opacity-40 transition-all";
+      "items-center select-none space-x-1 py-1 px-3 rounded-md backdrop-blur-sm dark:backdrop-blur-md bg-opacity-30 hover:bg-opacity-40 transition-all";
     const styleActiveClasses =
       "text-yellow-400 dark:text-sky-400 border-b-2 dark:border-sky-400 pointer-events-none cursor-not-allowed";
     const styleInactiveClasses =
@@ -111,7 +111,7 @@ class Header extends Component {
             onClick={this.handleNavButtonClick}
             to={_R_["route-dashboard"]}
             className={({ isActive }) =>
-              this.getClassStyles(isActive, isMobileMenuOpen)
+              this.getTailwindClassNames(isActive, isMobileMenuOpen)
             }
           >
             <NavDashboardIcon />
@@ -123,7 +123,7 @@ class Header extends Component {
             onClick={this.handleNavButtonClick}
             to={_R_["route-home"]}
             className={({ isActive }) =>
-              this.getClassStyles(isActive, isMobileMenuOpen)
+              this.getTailwindClassNames(isActive, isMobileMenuOpen)
             }
           >
             <NavHomeIcon />
@@ -135,7 +135,7 @@ class Header extends Component {
             onClick={this.handleNavButtonClick}
             to={_R_["route-login"]}
             className={({ isActive }) =>
-              this.getClassStyles(isActive, isMobileMenuOpen)
+              this.getTailwindClassNames(isActive, isMobileMenuOpen)
             }
           >
             <NavLoginIcon />
@@ -147,7 +147,7 @@ class Header extends Component {
             onClick={this.handleNavButtonClick}
             to={_R_["route-register"]}
             className={({ isActive }) =>
-              this.getClassStyles(isActive, isMobileMenuOpen)
+              this.getTailwindClassNames(isActive, isMobileMenuOpen)
             }
           >
             <NavRegsiterIcon />
@@ -159,7 +159,7 @@ class Header extends Component {
             onClick={this.handleNavButtonClick}
             to={_R_["route-course-allocation"]}
             className={({ isActive }) =>
-              this.getClassStyles(isActive, isMobileMenuOpen)
+              this.getTailwindClassNames(isActive, isMobileMenuOpen)
             }
           >
             <NavCrcAlcIcon />
@@ -171,7 +171,7 @@ class Header extends Component {
             onClick={this.handleNavButtonClick}
             to={_R_["route-api-button-table"]}
             className={({ isActive }) =>
-              this.getClassStyles(isActive, isMobileMenuOpen)
+              this.getTailwindClassNames(isActive, isMobileMenuOpen)
             }
           >
             <NavApisBtn />
@@ -183,7 +183,7 @@ class Header extends Component {
             onClick={this.handleNavButtonClick}
             to={_R_["route-timetable-management"]}
             className={({ isActive }) =>
-              this.getClassStyles(isActive, isMobileMenuOpen)
+              this.getTailwindClassNames(isActive, isMobileMenuOpen)
             }
           >
             <NavCrcAlcIcon />
@@ -195,7 +195,7 @@ class Header extends Component {
             onClick={this.handleNavButtonClick}
             to={`${_R_["route-self-profile-view+<id:number>"]}/${instructorId}`}
             className={({ isActive }) =>
-              this.getClassStyles(isActive, isMobileMenuOpen)
+              this.getTailwindClassNames(isActive, isMobileMenuOpen)
             }
           >
             <NavUserProfileIcon />
@@ -207,7 +207,7 @@ class Header extends Component {
             onClick={this.handleNavButtonClick}
             to={$_LOGOUT_ROUTE}
             className={({ isActive }) =>
-              this.getClassStyles(isActive, isMobileMenuOpen)
+              this.getTailwindClassNames(isActive, isMobileMenuOpen)
             }
           >
             <UserLogoutBtnIcon />
