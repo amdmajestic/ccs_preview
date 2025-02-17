@@ -1,2 +1,0 @@
-npm install axios@1.7.9 react-router-dom@7.1.1 jwt-decode@4.0.0 
-npm install -D tailwindcss@3.4.17 postcss@8.4.49 autoprefixer@10.4.20
