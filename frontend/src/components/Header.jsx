@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import {
   FaChalkboardTeacher as NavDashboardIcon,
   FaHome as NavHomeIcon,
@@ -21,8 +21,7 @@ class Header extends Component {
       isMobileMenuOpen: false, // Track mobile menu state
       instructorId: props.instructorId,
       loggedIn: props.loggedIn,
-      activeBar: "",
-      currentPage: _R_["route-redirect-app"],
+      currentPage: document.querySelector("a[aria-current='page']")?.textContent,
     };
   }
 
@@ -35,7 +34,7 @@ class Header extends Component {
   //   }
   // }
 
-  componentDidUpdate(previousProps) {
+  async componentDidUpdate(previousProps, previousStates) {
     if (this.props.loggedIn !== previousProps.loggedIn) {
       this.setState({
         loggedIn: this.props.loggedIn,
@@ -46,9 +45,14 @@ class Header extends Component {
         instructorId: this.props.instructorId,
       });
     }
-    if (this.props.currentPage !== previousProps.currentPage) {
+    const currentPage = await new Promise(resolve=> {
+      setTimeout(() => {
+        resolve(document.querySelector("a[aria-current='page']")?.textContent);
+      }, 75);
+    });
+    if (this.state.currentPage !== currentPage) {
       this.setState({
-        currentPage: _R_["route-redirect-app"],
+        currentPage: currentPage,
       });
     }
   }
@@ -66,7 +70,7 @@ class Header extends Component {
     }));
   };
 
-  restateActiveBarName = (navBtn) => {
+  restateCurrentPageName = (navBtn) => {
     this.setState(() => ({
       activeBar: navBtn.textContent,
     }));
@@ -74,7 +78,7 @@ class Header extends Component {
 
   handleNavButtonClick = (event) => {
     this.restateMobileMenu();
-    this.restateActiveBarName(event.currentTarget);
+    this.restateCurrentPageName(event.currentTarget);
   };
 
   getClassStyles(linkIsActive, isMobileMenuOpen) {
@@ -215,7 +219,7 @@ class Header extends Component {
   };
 
   render() {
-    const { isMobileMenuOpen, activeBar, currentPage } = this.state;
+    const { isMobileMenuOpen, currentPage } = this.state;
 
     return (
       <header className="bg-blue-600 dark:bg-purple-900 text-white dark:text-sky-200 backdrop-blur-md shadow-md">
@@ -223,7 +227,7 @@ class Header extends Component {
           <div className="flex items-center justify-between">
             {/* Logo/Branding - aligned to the left */}
             <div className="flex items-center ml-0">
-              <NavLink to={_R_["route-home"]} className="hover:text-gray-300">
+              <Link to={_R_["route-home"]} className="hover:text-gray-300">
                 <div className="relative w-12 h-12 rounded-md overflow-hidden transition-all duration-300 group hover:scale-110 hover:shadow-[0px_0px_20px_10px_whitesmoke]">
                   <img
                     src={_ASSETS_.CcsLogo}
@@ -236,35 +240,16 @@ class Header extends Component {
                     className="w-full h-full object-cover"
                   />
                 </div>
-              </NavLink>
+              </Link>
             </div>
 
             {!isMobileMenuOpen && (
               <div className="flex py-2 justify-center md:hidden w-full">
                 <big>
                   <span className="text-lg font-bold underline underline-offset-8">
-                    {activeBar ? (
-                      activeBar
-                    ) : (
-                      currentPage===_R_["route-home"]
-                    ) ? (
-                      document.querySelector("a[aria-current='page']")?.textContent ?? "Home"
-                    ) : currentPage===_R_["route-dashboard"]
-                    && (
-                      document.querySelector("a[aria-current='page']")?.textContent ?? "Dashboard"
-                    )}
+                    {currentPage}
                   </span>
                 </big>
-                
-                {/* <small>
-                  <small>
-                    <small>
-                      <samp>
-                        <em>Navigate to become visible here!</em>
-                      </samp>
-                    </small>
-                  </small>
-                </small> */}
               </div>
             )}
 
