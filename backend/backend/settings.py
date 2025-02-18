@@ -91,6 +91,7 @@ MIDDLEWARE = [
 
     # + Additional Libs +
     'corsheaders.middleware.CorsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     # - Additional Libs -
 ]
 
@@ -165,6 +166,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = str(BASE_DIR / 'content/static')
+
+# Serve static files with WhiteNoise
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
 MEDIAFILES_DIRS = [

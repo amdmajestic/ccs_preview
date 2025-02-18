@@ -3,6 +3,9 @@ asgiref==3.8.1
 
 gunicorn==23.0.0
 
+# Koyeb doesn't serve static files by default. To handle static files, you can use a package like WhiteNoise to serve them directly from your application.
+whitenoise==6.9.0
+
 Django==5.1.4
 
 #( Cross-Origin Resource Sharing (CORS) To fix "Cross-Origin" request error/issue )
