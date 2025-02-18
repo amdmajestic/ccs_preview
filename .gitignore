@@ -65,7 +65,7 @@ cover/
 *.pot
 
 # Content files
-backend/content/media
+backend/content/media/*
 
 # IDE/Editor folders
 .idea/
