@@ -8,6 +8,7 @@ from .serializers import GenericUserSerializer, GenericUserLoginSerializer, Inst
 from rest_framework.views import APIView
 # import subprocess
 from django.core.management import call_command
+from django.db import IntegrityError
 
 class InstructorRegisterView(generics.CreateAPIView):
     queryset = Instructor.objects.all()
@@ -109,6 +110,9 @@ class FeedFactoryData(APIView):
         # except subprocess.CalledProcessError as e:
         #     return Response({'error': f'An error occurred: {e.stderr}'}, status=500)
 
+        except IntegrityError as e:
+            # Handle duplicate value error (or other integrity issues)
+            return Response({'error': str(e)}, status=400)
         
         except Exception as e:
             # Handle any exceptions

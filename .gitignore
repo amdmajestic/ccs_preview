@@ -1,3 +1,6 @@
+/ccs_preview.old
+
+
 # Ignore Django migrations
 migrations/
 

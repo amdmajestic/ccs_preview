@@ -6,6 +6,8 @@ from .models import Instructor, Course, Class, Lecture
 from .serializers import InstructorSerializer, CourseSerializer, ClassSerializer, LectureSerializer
 from .utils import allocate_course, automatic_course_allocation
 
+from rest_framework.exceptions import PermissionDenied
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_instructors(request):
@@ -37,6 +39,14 @@ def get_lectures(request):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def allocate(request):
+
+    # Check for a custom header 'X-Can-Access'
+    custom_header = request.headers.get('X-Can-Access', None)
+
+    # If the header is missing or incorrect, deny the request
+    if not custom_header or custom_header != 'Allow-This-Action':
+        raise PermissionDenied("You are not allowed to access this resource!")
+
     data = request.data
     instructor_id = data.get("instructor_id")
     course_id = data.get("course_id")

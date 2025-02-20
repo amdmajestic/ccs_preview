@@ -91,7 +91,7 @@ MIDDLEWARE = [
 
     # + Additional Libs +
     'corsheaders.middleware.CorsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    # 'whitenoise.middleware.WhiteNoiseMiddleware', # uncomment on deploy
     # - Additional Libs -
 ]
 
@@ -165,15 +165,24 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = '/static/'
+"""
+Since for command `python manage.py collectstatic --noinput`
+...... especially automatically runs during django deployment,
+causes error: {
+    STATICFILES_DIRS = [
+        BASE_DIR / 'content/static',
+    ]
+}
+"""
+# Therefore this statement for (static) ROOT is used
 STATIC_ROOT = str(BASE_DIR / 'content/static')
 
 # Serve static files with WhiteNoise
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'   # uncomment on deploy
 
 MEDIA_URL = '/media/'
-MEDIAFILES_DIRS = [
-    str(BASE_DIR / 'content/media'),
-]
+MEDIA_ROOT = str(BASE_DIR / 'content/media')
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
