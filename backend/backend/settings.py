@@ -91,7 +91,7 @@ MIDDLEWARE = [
 
     # + Additional Libs +
     'corsheaders.middleware.CorsMiddleware',
-    # 'whitenoise.middleware.WhiteNoiseMiddleware', # uncomment on deploy
+    'whitenoise.middleware.WhiteNoiseMiddleware', # uncomment on deploy
     # - Additional Libs -
 ]
 
@@ -178,7 +178,7 @@ causes error: {
 STATIC_ROOT = str(BASE_DIR / 'content/static')
 
 # Serve static files with WhiteNoise
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'   # uncomment on deploy
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'   # uncomment on deploy
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = str(BASE_DIR / 'content/media')

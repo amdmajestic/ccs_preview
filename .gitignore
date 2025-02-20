@@ -1,4 +1,6 @@
 /ccs_preview.old
+/.lock.env
+/.notes.txt
 
 
 # Ignore Django migrations
