@@ -70,14 +70,15 @@ def allocate(request):
     except Class.DoesNotExist:
         return Response({"error": "Class not found"}, status=status.HTTP_404_NOT_FOUND)
     
+    # result = allocate_course_with_instructor(instructor, course, class_instance)
     result = allocate_course(instructor, course, class_instance)
     return Response(result)
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def allocate_all_courses(request):
-    automatic_course_allocation()
-    return Response({"success": "Automatic course allocation completed"})
+    progress = automatic_course_allocation()
+    return Response(progress)
 
 @api_view(['PATCH'])
 @permission_classes([IsAuthenticated])  # Change this to suit your security needs

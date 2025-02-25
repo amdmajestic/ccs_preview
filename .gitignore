@@ -1,7 +1,7 @@
-/ccs_preview.old
-/.lock.env
-/.notes.txt
-
+*ccs_venv*
+/.hint.*
+/.hint
+/.hint/*
 
 # Ignore Django migrations
 migrations/

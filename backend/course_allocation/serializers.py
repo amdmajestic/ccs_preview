@@ -9,6 +9,7 @@ class AuthoritySerializer(serializers.ModelSerializer):
 
 class InstructorSerializer(serializers.ModelSerializer):
     user = GenericUserSerializer()
+    authority = AuthoritySerializer()
 
     class Meta:
         model = Instructor

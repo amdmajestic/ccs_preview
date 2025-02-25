@@ -48,3 +48,6 @@ class Lecture(models.Model):
     @property
     def __details__(self):
         return f"Lecture for {self.lec_course_id.name} in {self.lec_class_id} with {self.lec_instr_id.name}"
+    
+    class Meta:
+        ordering = ['id']
