@@ -1,1 +1,0 @@
-import{r as o,j as t,_ as e}from"./index-Dsrk8M0t.js";class s extends o.Component{componentDidMount(){document.title="Login"}render(){return t.jsxs(t.Fragment,{children:[t.jsx(e.Auth_Form,{route:"/api/instructors/login/",method:"login"}),";"]})}}export{s as default};

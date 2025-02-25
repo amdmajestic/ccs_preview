@@ -1,0 +1,1 @@
+import{r as t,j as e,_ as r}from"./index-9Ll77M0r.js";class n extends t.Component{componentDidMount(){document.title="Register"}render(){return e.jsx(r.Auth_Form,{route:"/api/instructors/register/",method:"register"})}}export{n as default};
