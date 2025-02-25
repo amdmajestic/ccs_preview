@@ -1,0 +1,1 @@
+import{r as e,j as t}from"./index-YDo22WNU.js";class a extends e.Component{render(){return t.jsx("span",{className:"absolute max-w-fit max-h-fit top-1/2 left-2/4 z-50 rounded-full border border-lg border-blue-500 bg-white bg-opacity-50 text-blue-600 shadow-2xlxl shadow-blue-800 text-2xl size-2 animate-spin mix-blend-hard-light",children:"|"})}}export{a as default};
