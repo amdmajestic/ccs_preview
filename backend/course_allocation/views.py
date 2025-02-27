@@ -78,7 +78,7 @@ def allocate(request):
 @permission_classes([IsAuthenticated])
 def allocate_all_courses(request):
     progress = automatic_course_allocation()
-    return Response(progress)
+    return Response(progress.get('data'), status=progress.get('status_code'))
 
 @api_view(['PATCH'])
 @permission_classes([IsAuthenticated])  # Change this to suit your security needs

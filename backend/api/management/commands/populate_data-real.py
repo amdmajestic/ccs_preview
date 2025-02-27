@@ -44,6 +44,8 @@ class Command(BaseCommand):
             {"code": "SPM110", "name": "Software Project Management", "credit_hours": 3, "abbr": "SPM"},
         ]
 
+        courses_length = len(courses)
+
         # Sample data for instructors
         instructors = ["Ahmad", "Ayesha", "Bilal", "Fatima", "Hassan", "Khadija", "Mohammad", "Nadia", "Omar", "Zainab"]
         for i, instructor_name in enumerate(instructors):
@@ -55,9 +57,10 @@ class Command(BaseCommand):
             }
             user = GenericUserModel.objects.create_user(**user_data)
             instructor, created = api_models.Instructor.objects.get_or_create(user=user)
-            rand_choice = random.sample(range(len(courses)), random.randint(0, len(courses)//2))
+            # The // operator performs integer (floor) division, effectively halving the length and discarding any fractional part.
+            rand_choice = random.sample(range(courses_length), random.randint(0, (courses_length//2 if courses_length//2>5 else courses_length)))
             instructor.expertise = [courses[idx]["name"] for idx in rand_choice]
-            rand_choice = random.sample(range(len(courses)), random.randint(0, len(courses)//2))
+            rand_choice = random.sample(range(courses_length), random.randint(0, (courses_length//2 if courses_length>16 else courses_length)))
             instructor.course_preferences = [courses[idx]["name"] for idx in rand_choice]
             if i < len(authorities):
                 instructor.authority = api_models.Authority.objects.get(authority=authorities[i])

@@ -87,29 +87,8 @@ class FeedFactoryData(APIView):
 
     def post(self, request, *args, **kwargs):
         try:
-            # Path to your Python script
-            # script_path = './api/management/commands/populate_data-real.py'
-
-            # Execute the script using subprocess
-            # result = subprocess.run(['python', script_path], capture_output=True, text=True, check=True)
-
-            # Get the script output and errors
-            # output = result.stdout
-            # errors = result.stderr
-
-            call_command('populate_data-real')
-
-
-            # Return the response in JSON format
-            # return Response({'output': output, 'errors': errors}, status=200)
-
             # Return a success response
             return Response({'message': 'Data populated successfully.'}, status=200)
-
-
-        # except subprocess.CalledProcessError as e:
-        #     return Response({'error': f'An error occurred: {e.stderr}'}, status=500)
-
         except IntegrityError as e:
             # Handle duplicate value error (or other integrity issues)
             return Response({'error': str(e)}, status=400)
@@ -117,3 +96,49 @@ class FeedFactoryData(APIView):
         except Exception as e:
             # Handle any exceptions
             return Response({'error': str(e)}, status=500)
+        
+class DbDataHandle(APIView):
+    permission_classes = [AllowAny]
+    fileName = 'backup.json'
+
+    def get(self, request, *args, **kwargs):
+        return Response(
+            {"message": "GET request not allowed. Use POST to save <database>.json file & PUT to load data from <database>.json"},
+            status=status.HTTP_405_METHOD_NOT_ALLOWED
+        )
+
+    def post(self, request, *args, **kwargs):
+        try:
+            with open(self.fileName, 'w') as output_file:
+                call_command('dumpdata', '--exclude', 'auth.permission', '--exclude', 'contenttypes', stdout=output_file)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response({'message': 'Database backed up successfully.'}, status=status.HTTP_201_CREATED)
+
+
+    def patch(self, request, *args, **kwargs):
+        try:
+            with open(self.fileName, 'r') as input_file:
+                call_command('loaddata', input_file.name)
+        except FileNotFoundError:
+            return Response({'error': 'Backup file not found.'}, status=status.HTTP_404_NOT_FOUND)
+        except IOError as e:
+            return Response({'error': f'IO error occurred: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        except Exception as e:
+            return Response({'error': f'An unexpected error occurred: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response({'message': 'Data loaded successfully.'}, status=status.HTTP_200_OK)
+    
+
+    def put(self, request, *args, **kwargs):
+        try:
+            call_command('flush', '--no-input')
+        except Exception as e:
+            return Response({'error': f'An unexpected error occurred: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response({'message': 'Data loaded successfully.'}, status=status.HTTP_200_OK)
+
+    def delete(self, request, *args, **kwargs):
+        try:
+            call_command('flush', '--no-input')
+        except Exception as e:
+            return Response({'error': f'An unexpected error occurred: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response({'message': 'Data loaded successfully.'}, status=status.HTTP_200_OK)

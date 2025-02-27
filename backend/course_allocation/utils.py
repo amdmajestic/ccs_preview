@@ -2,6 +2,8 @@ import logging
 from .models import Instructor, Course, Class, Lecture
 from django.db import connection, models
 
+from rest_framework import status
+
 MAX_CREDIT_HOURS_NO_AUTHORITY: int = 9
 MAX_CREDIT_HOURS_WITH_AUTHORITY: int = 6
 AUTHORITIES: list = ["HOD", "Program Manager", "Timetable Manager"]
@@ -114,244 +116,143 @@ def allocate_course(course: Course, class_instance: Class, instructor: Instructo
     else:
         allocate_course_with_instructor()
 
-def _clean_postgres_db__tabe(self: models.Model = None) -> None:
+def _clean_db__tabe(tableRef: models.Model) -> None:
     try:
-        self.objects.all().delete()
-        app_name = self._meta.app_label
-        model_name = self.__name__
+        if tableRef is not None and issubclass(tableRef, models.Model):
+            pass
+        else:
+            raise TypeError(f"Expected an instance of a Django model, but got {type(tableRef).__name__}.")
+        
+        tableRef.objects.all().delete()
+        
+        app_name = tableRef._meta.app_label
+        model_name = tableRef.__name__
+
+        # Determine the database engine
+        db_engine = connection.vendor
+
         with connection.cursor() as cursor:
-            cursor.execute(f"ALTER SEQUENCE {app_name}_{model_name}_{self._meta.pk.name}_{'seq'} RESTART WITH 1;")
-        print(f"Model: {self.__name__} is clean Successfully.")
+            match db_engine:
+                case 'postgresql':
+                        sequence_name = f"{app_name}_{model_name}_{tableRef._meta.pk.name}_seq"
+                        cursor.execute(f"ALTER SEQUENCE {sequence_name} RESTART WITH 1;")
+                case 'sqlite':
+                    table_name = f"{app_name}_{model_name}"
+                    cursor.execute(f"UPDATE sqlite_sequence SET seq = 0 WHERE name = '{table_name}';")
+                # Default case
+                case _:
+                    pass
+        printSucc(f"Model_`{tableRef.__name__}` cleaned Successfully for \"{db_engine}\".")
+        
+        connection.close()
+        del app_name, model_name, db_engine
+
+    except TypeError:
+        raise
     except Exception as e:
-        print(f"Model: {self.__name__} can't be cleaned.\n ``Unexpected error: {e}")
+        raise NotImplementedError(f"Model: {tableRef.__name__} can't be cleaned.\n ``Unexpected error: {e}")
 
-# def _automatic_course_allocation_():
-#     _clean_postgres_db__tabe(Lecture)
-
-#     classes = Class.objects.all()
-#     courses = Course.objects.all()
-#     instructors = Instructor.objects.all()
-
-#     """"""
-#     def instructor_iterator(callableCondition):
-#         return filter(callableCondition, instructors)
-#     """"""
-
-#     global a_flag
-
-#     for instructor in instructors:
-#         instructor.taken_credit_hours = 0
-
-#     for class_instance in classes:
-#         instructor_iterator_soft_constraints = {}
-#         instructor_iterator_hard_constraints = {}
-#         for course in courses:
-#             course_offering_in_semesters_ids = [semester_id for semester_id in course.crs_for_semesters_id.values_list('id', flat=True)]
-            
-#             # verify soft constraints              
-#             if not instructor_iterator_soft_constraints:
-#                 instructor_iterator_soft_constraints = instructor_iterator(
-#                                                             lambda instructor: 
-#                                                                 check_soft_constraints( 
-#                                                                                     instructor, 
-#                                                                                     course, 
-#                                                                                     class_instance
-#                                                                                 )
-#                                                         )
-#             available_instructor_tentative = next(instructor_iterator_soft_constraints, None)
-            
-#             # verify hard constraints
-#             if not instructor_iterator_hard_constraints:
-#                 instructor_iterator_hard_constraints = instructor_iterator(
-#                                                             lambda instructor: 
-#                                                                 check_hard_constraints( 
-#                                                                                     instructor, 
-#                                                                                     course, 
-#                                                                                     class_instance, 
-#                                                                                     available_instructor_tentative
-#                                                                                 )
-#                                                         )
-#             available_instructor = next(instructor_iterator_hard_constraints, None)
-            
-#             if a_flag:
-#                 # print("--cstm--", class_instance, course, available_instructor, course_offering_in_semesters_ids, (class_instance.class_semester_id.id in course_offering_in_semesters_ids))
-#                 pass
-            
-#             # if 'available_instructor' is None, value of 'available_instructor_tentative' will be assigned to 'instr'
-#             instr = available_instructor or available_instructor_tentative
-
-#             if instr and class_instance.class_semester_id.id in course_offering_in_semesters_ids:
-#                 allocate_course(course, class_instance, instr)
-#             elif class_instance.class_semester_id.id in course_offering_in_semesters_ids:
-#                 allocate_course(course, class_instance)
-#         a_flag = False
-
-#     return {"success": "Automatic course allocation completed"}
-
-
-# def _automatic_course_allocation_():
-#     _clean_postgres_db__tabe(Lecture)
-
-#     classes = Class.objects.all()
-#     courses = Course.objects.all()
-#     instructors = Instructor.objects.all()
-
-#     global a_flag
-
-#     for instructor in instructors:
-#         instructor.taken_credit_hours = 0
-
-#     for class_instance in classes:
-#         for course in courses:
-#             course_offering_in_semesters_ids = [semester_id for semester_id in course.crs_for_semesters_id.values_list('id', flat=True)]
-#             if class_instance.class_semester_id.id in course_offering_in_semesters_ids:
-#                 for instructor in instructors:                
-#                     # verify soft constraints
-#                     available_instructor_tentative = instructor if check_soft_constraints( 
-#                                                                             instructor,
-#                                                                             course,
-#                                                                             class_instance
-#                                                                         ) else None
-                    
-#                     # verify hard constraints
-#                     available_instructor = instructor if check_hard_constraints( 
-#                                                                     instructor,
-#                                                                     course,
-#                                                                     class_instance,
-#                                                                     available_instructor_tentative
-#                                                                 ) else None
-                    
-#                     if a_flag:
-#                         # print("--cstm--", class_instance, course, available_instructor, course_offering_in_semesters_ids, (class_instance.class_semester_id.id in course_offering_in_semesters_ids))
-#                         pass
-                    
-#                     # if 'available_instructor' is None, value of 'available_instructor_tentative' will be assigned to 'instr'
-#                     instr = available_instructor or available_instructor_tentative
-
-#                     allocate_course(course, class_instance, instr)
-#     a_flag = False
-
-#     return {"success": "Automatic course allocation completed"}
-
-# def ___automatic_course_allocation___():
-#     _clean_postgres_db__tabe(Lecture)
-
-#     classes = Class.objects.all()
-#     courses = Course.objects.all()
-#     instructors = Instructor.objects.all()
-
-#     global a_flag
-    
-#     """"""
-#     def instructor_iterator(callableCondition):
-#         return filter(callableCondition, instructors)
-#     """"""
-
-#     for instructor in instructors:
-#         instructor.taken_credit_hours = 0
-
-#     for course in courses:
-#         course_offering_in_semesters_ids = [semester_id for semester_id in course.crs_for_semesters_id.values_list('id', flat=True)]
-#         instructor_iterator_soft_constraints = {}
-#         instructor_iterator_hard_constraints = {}
-#         for class_instance in classes:
-#             if class_instance.class_semester_id.id in course_offering_in_semesters_ids:
-#                 # for section_idx in range(class_instance.class_semester_id.has_sections):
-#                 #     section_no = section_idx + 1
-#                 #     if class_instance.class_section_id.id == section_no:
-#                 # verify soft constraints              
-#                 if not instructor_iterator_hard_constraints:
-#                     instructor_iterator_hard_constraints = instructor_iterator(
-#                                                                 lambda instructor: 
-#                                                                     check_hard_constraints( 
-#                                                                                         instructor, 
-#                                                                                         course, 
-#                                                                                         class_instance
-#                                                                                     )
-#                                                             )
-#                 available_instructor_tentative = next(instructor_iterator_hard_constraints, None)
-                
-#                 # verify hard constraints
-#                 if not instructor_iterator_soft_constraints:
-#                     instructor_iterator_soft_constraints = instructor_iterator(
-#                                                                 lambda instructor: 
-#                                                                     check_soft_constraints( 
-#                                                                                         instructor, 
-#                                                                                         course, 
-#                                                                                         class_instance, 
-#                                                                                         available_instructor_tentative
-#                                                                                     )
-#                                                             )
-#                 available_instructor = next(instructor_iterator_soft_constraints, None)
-                
-#                 if a_flag:
-#                     # print("--cstm--", class_instance, course, available_instructor, course_offering_in_semesters_ids, (class_instance.class_semester_id.id in course_offering_in_semesters_ids))
-#                     pass
-                
-#                 # if 'available_instructor' is None, value of 'available_instructor_tentative' will be assigned to 'instr'
-#                 instr = available_instructor or available_instructor_tentative
-#                 allocate_course(course, class_instance, instr)
-#     a_flag = False
-
-#     return {"success": "Automatic course allocation completed"}
 
 def automatic_course_allocation():
-    _clean_postgres_db__tabe(Lecture)
+    try:
+        _clean_db__tabe(tableRef=Lecture)
+        
+        classes: models.QuerySet[Class] = Class.objects.all()
+        courses: models.QuerySet[Course] = Course.objects.all()
+        instructors: models.QuerySet[Instructor] = Instructor.objects.all()
 
-    classes: models.QuerySet[Class] = Class.objects.all()
-    courses: models.QuerySet[Course] = Course.objects.all()
-    instructors: models.QuerySet[Instructor] = Instructor.objects.all()
+        global a_flag
 
-    global a_flag
+        for instructor in instructors:
+            instructor.taken_credit_hours = 0
+            instructor.save()
+            for course in courses:
+                course_offering_in_semesters_ids = [semester_id for semester_id in course.crs_for_semesters_id.values_list('id', flat=True)]
+                for class_instance in classes:
+                    if class_instance.class_semester_id.id in course_offering_in_semesters_ids:
+                        
+                        similar_lecture_already_assigned: Lecture = Lecture.objects.filter(lec_class_id__id=class_instance.id, lec_course_id__id=course.id).first()
+                        assigned_instructor: Instructor = similar_lecture_already_assigned.lec_instr_id if similar_lecture_already_assigned else None
+                        
+                        # verify hard constraints
+                        available_instructor_tentative: Instructor = instructor if check_hard_constraints( 
+                                                                        instructor, 
+                                                                        course, 
+                                                                        class_instance
+                                                                    ) else None
+                        
+                        # verify soft constraints
+                        available_instructor: Instructor = None
+                        if available_instructor_tentative:
+                            available_instructor = available_instructor_tentative if check_soft_constraints( 
+                                                                available_instructor_tentative,
+                                                                course, 
+                                                                class_instance, 
+                                                                assigned_instructor
+                                                            ) else None
+                        
+                        if a_flag:
+                            # print("--cstm--", class_instance, course, available_instructor, course_offering_in_semesters_ids, (class_instance.class_semester_id.id in course_offering_in_semesters_ids))
+                            pass
+                        
+                        # if 'available_instructor' is None, value of 'available_instructor_tentative' will be assigned to 'instr'
+                        instr = available_instructor or available_instructor_tentative
+                        if instr:
+                            allocate_course(course, class_instance, instr, assigned_instructor)
+                        elif assigned_instructor:
+                            pass
+                        else:
+                            allocate_course(course, class_instance)
+        a_flag = False
+    except KeyError as e:
+        printErr(e)
+        return {
+            "data": {
+                "error": "Automatic course allocation failed", 
+                "message": str(e)
+            },
+            "status_code": status.HTTP_404_NOT_FOUND,
+        }
+    except ValueError as e:
+        printErr(e)
+        return {
+            "data": {
+                "error": "Automatic course allocation failed", 
+                "message": str(e)
+            },
+            "status_code": status.HTTP_400_BAD_REQUEST,
+        }
+    except NotImplementedError as e:
+        printErr(e)
+        return {
+            "data": {
+                "error": "Automatic course allocation failed", 
+                "message": str(e)
+            },
+            "status_code": status.HTTP_501_NOT_IMPLEMENTED,
+        }
+    except Exception as e:
+        printErr(e)
+        return {
+            "data": {
+                "error": "Automatic course allocation failed", 
+                "message": str(e)
+            },
+            "status_code": status.HTTP_500_INTERNAL_SERVER_ERROR,
+        }
+    else:
+        msg = "Automatic course allocation completed"
+        printSucc(msg)
+        return {
+            "data": {
+                "success": msg,
+            },
+            "status_code": status.HTTP_201_CREATED,
+        }
 
-    for instructor in instructors:
-        instructor.taken_credit_hours = 0
-        for course in courses:
-            course_offering_in_semesters_ids = [semester_id for semester_id in course.crs_for_semesters_id.values_list('id', flat=True)]
-            for class_instance in classes:
-                if class_instance.class_semester_id.id in course_offering_in_semesters_ids:
-                    
-                    similar_lecture_already_assigned: Lecture = Lecture.objects.filter(lec_class_id__id=class_instance.id, lec_course_id__id=course.id).first()
-                    assigned_instructor: Instructor = similar_lecture_already_assigned.lec_instr_id if similar_lecture_already_assigned else None
-                    
-                    # verify hard constraints
-                    available_instructor_tentative: Instructor = instructor if check_hard_constraints( 
-                                                                    instructor, 
-                                                                    course, 
-                                                                    class_instance
-                                                                ) else None
-                    
-                    # verify soft constraints
-                    available_instructor: Instructor = None
-                    if available_instructor_tentative:
-                        available_instructor = available_instructor_tentative if check_soft_constraints( 
-                                                            available_instructor_tentative,
-                                                            course, 
-                                                            class_instance, 
-                                                            assigned_instructor
-                                                        ) else None
-                    
-                    if a_flag:
-                        # print("--cstm--", class_instance, course, available_instructor, course_offering_in_semesters_ids, (class_instance.class_semester_id.id in course_offering_in_semesters_ids))
-                        pass
-                    
-                    # if 'available_instructor' is None, value of 'available_instructor_tentative' will be assigned to 'instr'
-                    instr = available_instructor or available_instructor_tentative
-                    if instr:
-                        allocate_course(course, class_instance, instr, assigned_instructor)
-                    elif assigned_instructor:
-                        pass
-                    else:
-                        allocate_course(course, class_instance)
-    a_flag = False
+def printErr(errRef: Exception):
+    print(f"\033[31mError: {str(errRef)}\033[0m")
 
-    return {"success": "Automatic course allocation completed"}
+def printSucc(msg: any):
+    print(f"\033[32mSuccess: {str(msg)}\033[0m")
 
-
-def order_or_refresh_lectures():
-    lectures = Lecture.objects.all().order_by('id')
-    lectures.update()
-    # _clean_postgres_db__tabe(Lecture)
-    
-    # for lecture in lectures:
-    #     lecture.save()
